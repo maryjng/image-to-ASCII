@@ -4,6 +4,7 @@ from PIL import Image
 #	im = im.convert("L")
 
 ASCII_CHARS = [ '#', '?', '%', '.', 'S', '+', '.', '*', ':', ',', '@']
+#255/11 for range
 
 def resize(picture, OG_width):
 	
