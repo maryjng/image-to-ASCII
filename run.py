@@ -1,41 +1,38 @@
 from PIL import Image
-from numpy import reshape
+import numpy as np
 
-charList =  `^\",:;Il!i~+_-?][}{1)(|\\/tfjrxnuvczXYUJCLQ0OZmwqpdbkhao*#MW&8%B@$
+charList = ['`', '^', '"', ',', ':', ';', 'I', 'l', '!', 'i', '~', '+', '_', '-', '?', ']', '[', '}', '{', '1', ')', '(', '|', '\\', '/', 't', 'f', 'j', 'r', 'x', 'n', 'u', 'v', 'c', 'z', 'X', 'Y', 'U', 'J', 'C', 'L', 'Q', '0', 'O', 'Z', 'm', 'w', 'q', 'p', 'd', 'b', 'k', 'h', 'a', 'o', '*', '#', 'M', 'W', '&', '8', '%', 'B', '@', '$']
+
 
 def resize(picture, new_width = 25):
-	width, height = picture.size
+	im = Image.open(picture)
+
+	width, height = im.size
 	ratio = width//height
 	new_height = new_width//ratio
 
-	return new_width, new_height
-
-
-#resize original pic. takes new_width and calculates new_height using the pic's width/height ratio.
+	im.resize((new_width, new_height))
+	return im
 
 def convGray(picture):
 	with Image.open(picture) as im:
 		im = im.convert("L")
-
-
-	# not needed prolly. numpy.reshape(pixels, (width, height))
-	#graypixels list
+	return im
 
 def to_ASCII(picture):
-	convGray(picture)
+	image = resize(picture)
+	image = convGray(picture)
 
-	pixels = list(im.getdata())
+	pixels = list(image.getdata())
 
-	width, height = im.size
+	width, height = image.size
 
-	newpic = []
-	for pix in graypixels:
-		newpic.append(charList[pix // 4])
+	convertedpixels = []
+	for pix in pixels:
+		convertedpixels.append(charList[pix // 4])
 
-	numpy.reshape(newpic, (width, height))
+	newpic = np.array(convertedpixels).reshape(width, height)
+
 	print(newpic)
 
-# each pixel has a value from 0 - 255. Floor by 4 and assign to ASCII char.
-
-
-convGray("sadcat.PNG")
+to_ASCII("images/angery.PNG")
