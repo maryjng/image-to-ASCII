@@ -1,26 +1,22 @@
+#TODO Figure out how to convert pixels to ASCII chars, accounting for when converted value is over len(charList)
+
 from PIL import Image
-import numpy as np
 
 charList = ['@','%','#','*','+','=','-',':','.',' ']
 
-def open_picture(picture):
-	im = Image.open(picture)
-	return im
-
 def resize(im, new_width = 100):
+	im = Image.open(picture)
 	width, height = im.size
 	ratio = width//height
-	new_height = new_width//ratio
+	new_height = new_width*ratio
 	newsize = (new_width, new_height)
 	resized_im = im.resize(newsize)
 	return resized_im
 
 def convGray(im):
-	im = im.convert("L")
-	return im
+	return im.convert("L")
 
-def to_ASCII(picture):
-	im = open_picture(picture)
+def to_ASCII(im):
 	resized_im = resize(im)
 	width, height = resized_im.size
 	imagegray = convGray(resized_im)
@@ -28,17 +24,22 @@ def to_ASCII(picture):
 
 	convertedpixels = []
 	for pix in pixels:
-		convertedpixels.append(charList[pix // 10])
+		convertedpixels.append(charList[pix // 25])
+	print(convertedpixels)
+	newpic = [convertedpixels[n:n + new_width] for n in range(0, len(covertedpixels), new_width)]
 
-	lineofpixels = []
-	n = 0
-	while width < len(convertedpixels):
-		while n < width:
-			lineofpixels.append(convertedpixels[n])
-			n += 1
-		print("".join(lineofpixels))
-		n += n
-		width += width
+	return '\n'.join(newpic)
 
-pic = input("Enter the file name: ")
-to_ASCII(pic)
+def run():
+	pic = input("Enter the file name: ")
+	to_ASCII(pic)
+
+def printtotxt():
+	pic = input("Enter the file name: ")
+	output = to_ASCII(pic)
+	t = open('output.txt', 'w')
+	t.write(output)
+	t.close
+
+run()
+printtotxt()
