@@ -1,6 +1,8 @@
+#todo add some sort of message or try except for run()
+
 from PIL import Image
 
-charList = [' ', '.', "'", '`', '^', '"', ',', ':', ';', 'I', 'l', '!', 'i', '>', '<', '~', '+', '_', '-', '?', ']', '[', '}', '{', '1', ')', '(', '|', '\\', '/', 't', 'f', 'j', 'r', 'x', 'n', 'u', 'v', 'c', 'z', 'X', 'Y', 'U', 'J', 'C', 'L', 'Q', '0', 'O', 'Z', 'm', 'w', 'q', 'p', 'd', 'b', 'k', 'h', 'a', 'o', '*', '#', 'M', 'W', '&', '8', '%', 'B', '@', '$']
+charList = [ '#', '?', '%', '.', 'S', '+', '.', '*', ':', ',', '@']
 
 def resize(im, new_width = 100):
 	im = Image.open(im)
@@ -22,7 +24,7 @@ def to_ASCII(im):
 
 	convertedpixels = []
 	for pix in pixels:
-		convertedpixels.append(charList[(pix // 4) - 1])
+		convertedpixels.append(charList[(pix // 25) - 1])
 
 	newpic = [convertedpixels[n:n + width] for n in range(0, len(convertedpixels), width)]
 	return newpic
@@ -34,5 +36,6 @@ def run():
 	for line in endpic:
 		f.write("\n" + "".join(line))
 	f.close
+	print("Done.")
 
 run()
