@@ -1,11 +1,9 @@
-#TODO Figure out how to convert pixels to ASCII chars, accounting for when converted value is over len(charList)
-
 from PIL import Image
 
-charList = ['@','%','#','*','+','=','-',':','.',' ']
+charList = [' ', '.', "'", '`', '^', '"', ',', ':', ';', 'I', 'l', '!', 'i', '>', '<', '~', '+', '_', '-', '?', ']', '[', '}', '{', '1', ')', '(', '|', '\\', '/', 't', 'f', 'j', 'r', 'x', 'n', 'u', 'v', 'c', 'z', 'X', 'Y', 'U', 'J', 'C', 'L', 'Q', '0', 'O', 'Z', 'm', 'w', 'q', 'p', 'd', 'b', 'k', 'h', 'a', 'o', '*', '#', 'M', 'W', '&', '8', '%', 'B', '@', '$']
 
 def resize(im, new_width = 100):
-	im = Image.open(picture)
+	im = Image.open(im)
 	width, height = im.size
 	ratio = width//height
 	new_height = new_width*ratio
@@ -24,22 +22,17 @@ def to_ASCII(im):
 
 	convertedpixels = []
 	for pix in pixels:
-		convertedpixels.append(charList[pix // 25])
-	print(convertedpixels)
-	newpic = [convertedpixels[n:n + new_width] for n in range(0, len(covertedpixels), new_width)]
+		convertedpixels.append(charList[(pix // 4) - 1])
 
-	return '\n'.join(newpic)
+	newpic = [convertedpixels[n:n + width] for n in range(0, len(convertedpixels), width)]
+	return newpic
 
 def run():
 	pic = input("Enter the file name: ")
-	to_ASCII(pic)
-
-def printtotxt():
-	pic = input("Enter the file name: ")
-	output = to_ASCII(pic)
-	t = open('output.txt', 'w')
-	t.write(output)
-	t.close
+	endpic = to_ASCII(pic)
+	f = open("output.txt", "w")
+	for line in endpic:
+		f.write("\n" + "".join(line))
+	f.close
 
 run()
-printtotxt()
