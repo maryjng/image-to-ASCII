@@ -1,5 +1,3 @@
-#todo add some sort of message or try except for run()
-
 from PIL import Image
 
 charList = [ '#', '?', '%', '.', 'S', '+', '.', '*', ':', ',', '@']
@@ -7,10 +5,10 @@ charList = [ '#', '?', '%', '.', 'S', '+', '.', '*', ':', ',', '@']
 def resize(im, new_width = 100):
 	im = Image.open(im)
 	width, height = im.size
-	ratio = width//height
-	new_height = new_width*ratio
+	wratio = new_width/float(width)
+	new_height = int((float(height))*wratio)
 	newsize = (new_width, new_height)
-	resized_im = im.resize(newsize)
+	resized_im = im.thumbnail(newsize)
 	return resized_im
 
 def convGray(im):
